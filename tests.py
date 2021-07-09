@@ -31,14 +31,16 @@ class TestUtils(unittest.TestCase):
         closing = [')', ']', '}']
 
         for i in range(len(opening)):
-            self.assertTrue(utils.are_brackets_matching(opening[i], closing[i]))
+            self.assertTrue(utils.are_brackets_matching(
+                opening[i], closing[i]))
 
     def test_are_brackets_matching_false(self):
         opening = ['(', '(', '(', '[', '[', ' [', '{', '{', '{', ']']
         closing = [']', '}', '4', ')', '}', '/', ')', ']', 'h', '[']
 
         for i in range(len(opening)):
-            self.assertFalse(utils.are_brackets_matching(opening[i], closing[i]))
+            self.assertFalse(utils.are_brackets_matching(
+                opening[i], closing[i]))
 
 
 class TestParser(unittest.TestCase):
@@ -102,10 +104,10 @@ class TestParser(unittest.TestCase):
 
     def test_parse_molecule_invalid_formula(self):
         data = 'U3Br1}2{P2[ONHe9({SO}3)2]2}9'
-        
+
         with self.assertRaises(Exception) as context:
             parser.parse_molecule(data)
-            
+
             self.assertTrue('Invalid formula' in str(context.exception))
 
 

@@ -5,9 +5,10 @@ def get_next_number(string, index):
     """
         Returns the string representing the next number
         you encounter (index must be on the first digit of the number)
+        
         @Parameters: 
             string
-        
+
         @Returns: string or False
     """
     i = index
@@ -19,12 +20,13 @@ def get_next_number(string, index):
 
     return string[i: index]
 
+
 def get_next_atom(molecule, index):
     """
         @Parameters:
             molecule: string
             index: int
-        
+
         @returns: 
             dict:
                 name: string
@@ -53,12 +55,12 @@ def get_next_atom(molecule, index):
 def parse_molecule(molecule):
     """
         @Parameters: molecule: string => the formula of a molecule
-        
+
         @Returns: dict with the count of each atoms in the molecule
     """
-    if not molecule: 
+    if not molecule:
         return {}
-    
+
     i = 0
     brackets_stack = []
     counter_stack = [{}]
