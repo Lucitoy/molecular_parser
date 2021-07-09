@@ -5,25 +5,25 @@ import unittest
 
 class TestUtils(unittest.TestCase):
     def test_is_closing_char_true(self):
-        closingChars = [')', ']', '}']
+        closing_chars = [')', ']', '}']
 
-        for char in closingChars:
+        for char in closing_chars:
             self.assertTrue(utils.is_closing_char(char))
 
     def test_is_closing_char_false(self):
-        nonClosingChars = ['p', 'hola', '$', '(', ':']
-        for char in nonClosingChars:
+        non_closing_chars = ['p', 'hola', '$', '(', ':']
+        for char in non_closing_chars:
             self.assertFalse(utils.is_closing_char(char))
 
     def test_is_opening_char_true(self):
-        openingChar = ['(', '[', '{']
+        opening_char = ['(', '[', '{']
 
-        for char in openingChar:
+        for char in opening_char:
             self.assertTrue(utils.is_opening_char(char))
 
     def test_is_opening_char_false(self):
-        nonOpeningChars = ['p', 'bonjour pedro', '$', ')', ':']
-        for char in nonOpeningChars:
+        non_opening_chars = ['p', 'bonjour pedro', '$', ')', ':']
+        for char in non_opening_chars:
             self.assertFalse(utils.is_opening_char(char))
 
     def test_are_brackets_matching_true(self):

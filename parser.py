@@ -41,13 +41,13 @@ def get_next_atom(molecule, index):
 
     atom = molecule[i: index]
     number = get_next_number(molecule, index)
-    atomLength = len(atom)
+    atom_length = len(atom)
     if number:
-        atomLength += len(number)
+        atom_length += len(number)
     else:
         number = 1
 
-    return {'name': atom, 'count': int(number), 'length': atomLength}
+    return {'name': atom, 'count': int(number), 'length': atom_length}
 
 
 def parse_molecule(molecule):
@@ -60,27 +60,27 @@ def parse_molecule(molecule):
         return {}
     
     i = 0
-    bracketsStack = []
-    counterStack = [{}]
+    brackets_stack = []
+    counter_stack = [{}]
 
     length = len(molecule)
     while i < length:
         if utils.is_opening_char(molecule[i]):
-            bracketsStack.append(molecule[i])
+            brackets_stack.append(molecule[i])
             i += 1
-            counterStack.append({})
+            counter_stack.append({})
 
         elif utils.is_closing_char(molecule[i]):
             # invalid formula protection
-            if not len(bracketsStack):
+            if not len(brackets_stack):
                 raise Exception('Invalid formula')
-            lastBrace = bracketsStack.pop()
+            lastBrace = brackets_stack.pop()
             if not utils.are_brackets_matching(lastBrace, molecule[i]):
                 raise Exception('Invalid formula')
 
             i += 1
             number = get_next_number(molecule, i)
-            lastLevel = counterStack.pop()
+            last_level = counter_stack.pop()
 
             if number:
                 i += len(number)
@@ -88,16 +88,16 @@ def parse_molecule(molecule):
             else:
                 number = 1
 
-            for atom in lastLevel:
-                if not atom in counterStack[-1]:
-                    counterStack[-1][atom] = 0
-                counterStack[-1][atom] += (number * lastLevel[atom])
+            for atom in last_level:
+                if not atom in counter_stack[-1]:
+                    counter_stack[-1][atom] = 0
+                counter_stack[-1][atom] += (number * last_level[atom])
 
         else:
             atom = get_next_atom(molecule, i)
             i += atom['length']
-            if not atom['name'] in counterStack[-1]:
-                counterStack[-1][atom['name']] = 0
-            counterStack[-1][atom['name']] += atom['count']
+            if not atom['name'] in counter_stack[-1]:
+                counter_stack[-1][atom['name']] = 0
+            counter_stack[-1][atom['name']] += atom['count']
 
-    return counterStack[0]
+    return counter_stack[0]
