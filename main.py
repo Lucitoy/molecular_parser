@@ -1,24 +1,6 @@
 
 import utils
 
-
-
-bracesStack = []
-countStacks = [{}]
-index = 0
-
-def isClosingChar(char):
-    closingBraces = [')', ']', '}']
-    return char in closingBraces and char
-
-def isOpeningChar(char):
-    closingBraces = ['(', '[', '{']
-    return char in closingBraces and char
-
-def areBracesMatching(b1, b2):
-    match = {'(': ')', '[': ']', '{': '}'}
-    return isOpeningChar(b1) and match[b1] == b2
-
 def getNextAtom(molecule, index):
     # first char should always be an uppercase letter so we check the second one
     i = index
@@ -41,37 +23,38 @@ def getNextAtom(molecule, index):
 
 def parse_molecule(molecule):
     i = 0
+    bracesStack = []
+    countStack = [{}]
+    
     length = len(molecule)
     while i < length:
-        if isOpeningChar(molecule[i]):
+        if utils.isOpeningChar(molecule[i]):
             i += 1
-            countStacks.append({})
+            countStack.append({})
 
-        elif isClosingChar(molecule[i]):
+        elif utils.isClosingChar(molecule[i]):
             i += 1
             number = utils.getNextNumber(molecule, i)
-            lastLevel = countStacks.pop()
+            lastLevel = countStack.pop()
 
             if number:
                 i += len(number)
                 number = int(number)
-            else:
-                number = 1
+            else: number = 1
 
             for atom in lastLevel:
-                if not atom in countStacks[-1]:
-                    countStacks[-1][atom] = 0
-                countStacks[-1][atom] += (number * lastLevel[atom])
+                if not atom in countStack[-1]:
+                    countStack[-1][atom] = 0
+                countStack[-1][atom] += (number * lastLevel[atom])
 
         else:
             atom = getNextAtom(molecule, i)
             i += atom['length']
-            if not atom['name'] in countStacks[-1]:
-                countStacks[-1][atom['name']] = 0
+            if not atom['name'] in countStack[-1]:
+                countStack[-1][atom['name']] = 0
+            countStack[-1][atom['name']] += atom['count']
 
-            countStacks[-1][atom['name']] += atom['count']
-
-    return countStacks[0]
+    return countStack[0]
 
 
 
