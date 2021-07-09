@@ -43,40 +43,40 @@ class TestUtils(unittest.TestCase):
 
 class TestParser(unittest.TestCase):
     def test_getNextNumber(self):
-        data = ["3333A", "1", "a", ")"]
-        expected = ["3333", "1", False, False]
+        data = ['3333A', '1', 'a', ')']
+        expected = ['3333', '1', False, False]
 
         for i in range(len(data)):
             self.assertEqual(parser.getNextNumber(data[i], 0), expected[i])
 
     def test_getNextNumber_with_different_index(self):
-        data = "Ke12"
-        expected = "12"
+        data = 'Ke12'
+        expected = '12'
         index = 2
         self.assertEqual(parser.getNextNumber(data, index), expected)
 
     def test_getNextAtom(self):
         data = 'H2O'
         index = 0
-        expected = {'name': 'H', 'count': 2, "length": 2}
+        expected = {'name': 'H', 'count': 2, 'length': 2}
         self.assertEqual(parser.getNextAtom(data, index), expected)
 
     def test_getNextAtom_no_number(self):
         data = 'HO'
         index = 0
-        expected = {'name': 'H', 'count': 1, "length": 1}
+        expected = {'name': 'H', 'count': 1, 'length': 1}
         self.assertEqual(parser.getNextAtom(data, index), expected)
 
     def test_getNextAtom_with_lower(self):
         data = 'HeC'
         index = 0
-        expected = {'name': 'He', 'count': 1, "length": 2}
+        expected = {'name': 'He', 'count': 1, 'length': 2}
         self.assertEqual(parser.getNextAtom(data, index), expected)
 
     def test_getNextAtom_with_different_index(self):
         data = 'HeC'
         index = 2
-        expected = {'name': 'C', 'count': 1, "length": 1}
+        expected = {'name': 'C', 'count': 1, 'length': 1}
         self.assertEqual(parser.getNextAtom(data, index), expected)
 
     def test_parse_molecule_simple(self):
@@ -89,8 +89,8 @@ class TestParser(unittest.TestCase):
             '',
             'Mg(OH)2',
             'K4[ON(SO3)2]2',
-            "CH2OHCHOHCH2OH",
-            "U3Br12{P2[ONHe9({SO}3)2]2}9"
+            'CH2OHCHOHCH2OH',
+            'U3Br12{P2[ONHe9({SO}3)2]2}9'
         ]
         expected = [
             {},
@@ -101,7 +101,7 @@ class TestParser(unittest.TestCase):
         ]
 
     def test_parse_molecule_invalid_formula(self):
-        data = "U3Br1}2{P2[ONHe9({SO}3)2]2}9"
+        data = 'U3Br1}2{P2[ONHe9({SO}3)2]2}9'
         
         with self.assertRaises(Exception) as context:
             parser.parse_molecule(data)

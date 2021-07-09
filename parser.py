@@ -2,6 +2,14 @@ import utils
 
 
 def getNextNumber(string, index):
+    """
+        Returns the string representing the next number
+        you encounter (index must be on the first digit of the number)
+        @Parameters: 
+            string
+        
+        @Returns: string or False
+    """
     i = index
     while index < len(string) and string[index].isdigit():
         index += 1
@@ -43,6 +51,11 @@ def getNextAtom(molecule, index):
 
 
 def parse_molecule(molecule):
+    """
+        @Parameters: molecule: string => the formula of a molecule
+        
+        @Returns: dict with the count of each atoms in the molecule
+    """
     if not molecule: 
         return {}
     
@@ -60,10 +73,10 @@ def parse_molecule(molecule):
         elif utils.isClosingChar(molecule[i]):
             # invalid formula protection
             if not len(bracesStack):
-                raise Exception("Invalid formula")
+                raise Exception('Invalid formula')
             lastBrace = bracesStack.pop()
             if not utils.areBracesMatching(lastBrace, molecule[i]):
-                raise Exception("Invalid formula")
+                raise Exception('Invalid formula')
 
             i += 1
             number = getNextNumber(molecule, i)
