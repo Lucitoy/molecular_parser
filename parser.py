@@ -57,6 +57,9 @@ def parse_molecule(molecule):
         @Parameters: molecule: string => the formula of a molecule
 
         @Returns: dict with the count of each atoms in the molecule
+
+        It stacks dict for each level of brackets and add them 
+        in the lower level once a cracket closes
     """
     if not molecule:
         return {}
