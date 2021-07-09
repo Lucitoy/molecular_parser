@@ -1,61 +1,23 @@
+from parser import parse_molecule
 
-import utils
+# return {'H': 2, 'O': 1}
+water = 'H2O'
+print(parse_molecule(water))
 
-def getNextAtom(molecule, index):
-    # first char should always be an uppercase letter so we check the second one
-    i = index
-    index += 1
-    length = len(molecule)
-    if index < length and molecule[index].islower():
-        index += 1
+# return {'Mg': 1, 'O': 2, 'H': 2}
+magnesium_hydroxide = 'Mg(OH)2'
+print(parse_molecule(magnesium_hydroxide))
 
-    atom = molecule[i: index]
-    number = utils.getNextNumber(molecule, index)
+# return {'K': 4, 'O': 14, 'N': 2, 'S': 4}
+fremy_salt = 'K4[ON(SO3)2]2'
+print(parse_molecule(fremy_salt))
 
-    atomLength = len(atom)
+glycerol = "CH2OHCHOHCH2OH"
+# return {'C': 3, 'H': 8, 'O': 3}
+print(parse_molecule(glycerol))
 
-    if number:
-        atomLength += len(number)
-    else:
-        number = 1
+random_molecule = "U3Br12{P2[ONHe9({SO}3)2]2}9"
+print(parse_molecule(random_molecule))
 
-    return {'name': atom, 'count': int(number), 'length': atomLength}
-
-def parse_molecule(molecule):
-    i = 0
-    bracesStack = []
-    countStack = [{}]
-    
-    length = len(molecule)
-    while i < length:
-        if utils.isOpeningChar(molecule[i]):
-            i += 1
-            countStack.append({})
-
-        elif utils.isClosingChar(molecule[i]):
-            i += 1
-            number = utils.getNextNumber(molecule, i)
-            lastLevel = countStack.pop()
-
-            if number:
-                i += len(number)
-                number = int(number)
-            else: number = 1
-
-            for atom in lastLevel:
-                if not atom in countStack[-1]:
-                    countStack[-1][atom] = 0
-                countStack[-1][atom] += (number * lastLevel[atom])
-
-        else:
-            atom = getNextAtom(molecule, i)
-            i += atom['length']
-            if not atom['name'] in countStack[-1]:
-                countStack[-1][atom['name']] = 0
-            countStack[-1][atom['name']] += atom['count']
-
-    return countStack[0]
-
-
-
-print(parse_molecule('K4[ON(SO3)2]2'))
+breaking_molecule = "U3Br1}2{P2[ONHe9({SO}3)2]2}9"
+print(parse_molecule(breaking_molecule))
