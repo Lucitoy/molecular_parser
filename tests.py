@@ -106,7 +106,7 @@ class TestParser(unittest.TestCase):
         with self.assertRaises(Exception) as context:
             parser.parse_molecule(data)
             
-            self.assertTrue('Invalid formula' in context.exception)
+            self.assertTrue('Invalid formula' in str(context.exception))
 
 
 if __name__ == '__main__':
