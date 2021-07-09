@@ -1,12 +1,12 @@
-def isClosingChar(char):
-    closingBraces = [')', ']', '}']
-    return char in closingBraces
+def is_closing_char(char):
+    closingbrackets = [')', ']', '}']
+    return char in closingbrackets
 
-def isOpeningChar(char):
-    closingBraces = ['(', '[', '{']
-    return char in closingBraces
+def is_opening_char(char):
+    closingbrackets = ['(', '[', '{']
+    return char in closingbrackets
 
-def areBracesMatching(b1, b2):
+def are_brackets_matching(b1, b2):
     match = {'(': ')', '[': ']', '{': '}'}
     
-    return isOpeningChar(b1) and match[b1] == b2
+    return is_opening_char(b1) and match[b1] == b2
