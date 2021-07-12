@@ -5,7 +5,7 @@ def get_next_number(string, index):
     """
         Returns the string representing the next number
         you encounter (index must be on the first digit of the number)
-        
+
         @Parameters: 
             string
 
@@ -105,4 +105,7 @@ def parse_molecule(molecule):
                 counter_stack[-1][atom['name']] = 0
             counter_stack[-1][atom['name']] += atom['count']
 
-    return counter_stack[0]
+    if not len(brackets_stack):
+        return counter_stack[0]
+    else:
+        raise Exception('Invalid formula')

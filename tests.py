@@ -109,6 +109,14 @@ class TestParser(unittest.TestCase):
             parser.parse_molecule(data)
 
             self.assertTrue('Invalid formula' in str(context.exception))
+    
+    def test_parse_molecule_invalid_formula_not_closed_bracket(self):
+        data = 'U3(Br12{P2[ONHe9({SO}3)2]2}9'
+
+        with self.assertRaises(Exception) as context:
+            parser.parse_molecule(data)
+
+            self.assertTrue('Invalid formula' in str(context.exception))
 
 
 if __name__ == '__main__':
